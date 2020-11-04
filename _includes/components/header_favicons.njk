@@ -1,0 +1,26 @@
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/favicons/favicon.svg' }}">
+{% faviconLinks %}
+
+<script>
+  const usesDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || false;
+  const favicon = document.getElementById('favicon');
+  const appleTouchIcon = document.getElementById('apple-touch-icon');
+  
+  function switchFavicon(usesDarkMode) {  
+    var timestamp = Date.now();
+    if (usesDarkMode) { 
+      favicon.href = 'assets/favicons/dark/favicon-32x32.png?v=' + timestamp;
+      appleTouchIcon.href = 'assets/favicons/dark/apple-touch-icon.png?v=' + timestamp;
+    } else {
+      favicon.href = 'assets/favicons/light/favicon-32x32.png?v=' + timestamp;
+      appleTouchIcon.href = 'assets/favicons/light/apple-touch-icon.png?v=' + timestamp;
+    }
+  }
+
+  window.matchMedia("(prefers-color-scheme: dark)").addListener(
+    e => switchFavicon(e.matches)
+  );
+
+  switchFavicon(usesDarkMode);
+</script>
+

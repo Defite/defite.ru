@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} {% if title %}|{% endif %} {{ author.name or metadata.author.name }}</title>
+    <meta name="description" content="{{ description or metadata.description }}">
+    <link rel="stylesheet" href="{{ '/style.css?v=' + metadata.version | url }}">
+    <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
+    {% include '../components/header_favicons.njk' %}
+  </head>
+  <body class="dark:bg-dark">
+    <div class="container mx-auto p-10">
+      <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
+        {{ content | safe }}
+      </main>
+
+      <footer></footer>
+    </div>
+
+    <!-- Current page: {{ page.url | url }} -->
+  </body>
+</html>
