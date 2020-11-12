@@ -1327,6 +1327,16 @@ electron-to-chromium@^1.3.585:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.587.tgz#de570df7320eb259c0511f284c2d6008094edbf7"
   integrity sha512-8XFNxzNj0R8HpTQslWAw6UWpGSuOKSP3srhyFHVbGUGb8vTHckZGCyWi+iQlaXJx5DNeTQTQLd6xN11WSckkmA==
 
+eleventy-plugin-excerpt@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eleventy-plugin-excerpt/-/eleventy-plugin-excerpt-1.1.2.tgz#db9c62c217d4b38d022f685320f6358f32d7b07d"
+  integrity sha512-89GjSsFA7OFfQEpwssNDt+FdcH2MQlXyiwr8MVM2WYYp2bKGPs6nbBE1IUqQG3PMJl47IV7NZEbJiGD54srdrg==
+
+eleventy-plugin-youtube-embed@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/eleventy-plugin-youtube-embed/-/eleventy-plugin-youtube-embed-1.4.7.tgz#d36d503f3de82e6485182db098773e958cab6d98"
+  integrity sha512-0ngbWEQE2o25pPoOnOc/DlTTtrIUCGlJfVDzDefbMpbei5YRnkR/ZjbOuwjcX50wMw/6+e/ySzFwiMj7qBtzSg==
+
 emitter-mixin@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/emitter-mixin/-/emitter-mixin-0.0.3.tgz#5948cb286f2e48edc3b251a7cfc1f7883396d65c"

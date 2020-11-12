@@ -1,0 +1,27 @@
+{% macro renderCard(cardData, tagsList) %}
+<div class="rounded overflow-hidden shadow-lg {{ cardData.data.type }} card mb-10">
+  {% excerpt cardData %}
+
+  <div class="px-6 py-4">
+    {# Post title #}
+    <h2 class="font-bold text-2xl">
+      <a href="{{ cardData.url | url }}" class="postlist-link">{{ cardData.data.title }}</a>
+    </h2>
+    {# Post title #}
+
+    {# Post date/time #}
+    <time class="postlist-date text-gray-500 text-sm" datetime="{{ cardData.date | htmlDateString }}">{{ cardData.date | readableDate }}</time>
+    {# Post date/time #}
+  </div>
+  <div class="px-6 pt-4 pb-2">
+  {% for tag in cardData.data.tags %}
+    {%- if tagsList.indexOf(tag) != -1 -%}
+      {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+      <span class="tag inline-block bg-green-200 hover:bg-green-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+        <a href="{{ tagUrl | url }}" class="post-tag text-green-800">{{ tag }}</a>
+      </span>
+    {%- endif -%}
+  {% endfor %}
+  </div>
+</div>
+{% endmacro %}

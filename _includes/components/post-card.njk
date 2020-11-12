@@ -1,0 +1,10 @@
+{% import './post-card_text.njk' as textCard %}
+{% import './post-card_video.njk' as videoCard %}
+
+{% macro renderCard(cardData, tagsList) %}
+  {%- if not cardData.data.type or cardData.data.type === 'text' -%}
+    {{ textCard.renderCard(cardData, tagsList) }}
+  {%- elif cardData.data.type === 'video' -%}
+    {{ videoCard.renderCard(cardData, tagsList) }}
+  {%- endif -%}
+{% endmacro %}

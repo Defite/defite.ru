@@ -26,6 +26,13 @@ module.exports = {
               textDecoration: "none",
             },
           },
+          "h2 a": {
+            color: theme("colors.gray.900"),
+            textDecoration: "none",
+          },
+          ".tag a": {
+            textDecoration: "none",
+          },
         },
       },
 
@@ -37,6 +44,10 @@ module.exports = {
             "&:hover": {
               color: "#9ECE6A",
             },
+          },
+
+          "h2 a": {
+            color: "#A9B1D6",
           },
 
           h1: {

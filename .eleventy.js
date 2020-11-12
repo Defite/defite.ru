@@ -7,6 +7,8 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const eleventyRemark = require("@fec/eleventy-plugin-remark");
 const remarkImages = require("@fec/remark-images");
+const excerpt = require("eleventy-plugin-excerpt");
+const embedYouTube = require("eleventy-plugin-youtube-embed");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -49,6 +51,10 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("min", (...numbers) => {
     return Math.min.apply(null, numbers);
+  });
+
+  eleventyConfig.addFilter("log", (value) => {
+    console.log(value);
   });
 
   eleventyConfig.addCollection("tagList", function (collection) {
@@ -100,6 +106,12 @@ module.exports = function (eleventyConfig) {
       id: "apple-touch-icon",
     },
   ];
+
+  // Embed Youtube
+  eleventyConfig.addPlugin(embedYouTube);
+
+  // Create excerpt for posts
+  eleventyConfig.addPlugin(excerpt);
 
   // Create favicon links
   eleventyConfig.addNunjucksShortcode("faviconLinks", function () {

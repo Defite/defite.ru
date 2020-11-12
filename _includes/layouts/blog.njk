@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+templateClass: tmpl-blog
+---
+<div class="md:grid md:grid-cols-4 md:gap-4 lg:gap-6">
+  <div class="lg:col-span-1">
+    <div class="px-4 sm:px-0">
+      <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+      <p class="mt-1 text-sm leading-5 text-gray-600">
+        This information will be displayed publicly so be careful what you share.
+      </p>
+    </div>
+  </div>
+  <div class="mt-5 lg:mt-0 md:col-span-3 lg:col-span-2">
+    {{ content | safe }}
+  </div>
+</div>
