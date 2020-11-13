@@ -5,8 +5,6 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
-const eleventyRemark = require("@fec/eleventy-plugin-remark");
-const remarkImages = require("@fec/remark-images");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -139,19 +137,6 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.setLibrary("md", markdownLibrary);
 
-  // Remark images
-  eleventyConfig.addPlugin(eleventyRemark, {
-    plugins: [
-      {
-        plugin: remarkImages,
-        options: {
-          srcDir: "./",
-          targetDir: "./_site",
-        },
-      },
-    ],
-  });
-
   // Browsersync Overrides
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
@@ -189,8 +174,8 @@ module.exports = function (eleventyConfig) {
     // These are all optional, defaults are shown:
     dir: {
       input: ".",
-      includes: "_includes",
-      data: "_data",
+      includes: "src/_includes",
+      data: "src/_data",
       output: "_site",
     },
   };

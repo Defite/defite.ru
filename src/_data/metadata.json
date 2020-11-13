@@ -1,0 +1,11 @@
+{
+  "title": "Defite",
+  "url": "https://defite.ru/",
+  "description": "Nikita Makhov personal page",
+  "version": "1.0.0",
+  "author": {
+    "name": "Nikita Makhov",
+    "email": "me@defite.ru",
+    "url": "https://defite.ru/"
+  }
+}
