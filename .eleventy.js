@@ -5,8 +5,8 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
-const eleventyRemark = require("@fec/eleventy-plugin-remark");
-const remarkImages = require("@fec/remark-images");
+const markdownItAttrs = require("markdown-it-attrs");
+const markdownItBrakSpans = require("markdown-it-bracketed-spans");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -128,29 +128,20 @@ module.exports = function (eleventyConfig) {
   });
 
   /* Markdown Overrides */
-  let markdownLibrary = markdownIt({
-    html: true,
-    breaks: true,
-    linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: false,
-    permalinkClass: "direct-link",
-    permalinkSymbol: "#",
-  });
-  eleventyConfig.setLibrary("md", markdownLibrary);
+  /* Markdown plugins */
+  // https://www.11ty.dev/docs/languages/markdown/
+  // --and-- https://github.com/11ty/eleventy-base-blog/blob/master/.eleventy.js
+  // --and-- https://github.com/planetoftheweb/seven/blob/master/.eleventy.js
 
-  // Remark images
-  eleventyConfig.addPlugin(eleventyRemark, {
-    plugins: [
-      {
-        plugin: remarkImages,
-        options: {
-          srcDir: "./",
-          targetDir: "./_site",
-        },
-      },
-    ],
-  });
+  let markdownItOpts = {
+    html: true,
+    linkify: false,
+    typographer: true,
+  };
+  const markdownEngine = markdownIt(markdownItOpts);
+  markdownEngine.use(markdownItAttrs);
+  markdownEngine.use(markdownItBrakSpans);
+  eleventyConfig.setLibrary("md", markdownEngine);
 
   // Browsersync Overrides
   eleventyConfig.setBrowserSyncConfig({

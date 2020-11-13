@@ -28,16 +28,14 @@
     "@11ty/eleventy-navigation": "^0.1.6",
     "@11ty/eleventy-plugin-rss": "^1.0.9",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-    "@fec/eleventy-plugin-remark": "^2.0.0",
-    "@fec/remark-images": "^0.4.0-alpha",
     "@tailwindcss/typography": "^0.2.0",
     "luxon": "^1.21.3",
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.2.5",
+    "markdown-it-attrs": "^3.0.3",
+    "markdown-it-bracketed-spans": "^1.0.1",
     "plugin": "^0.3.3",
     "postcss-cli": "^8.2.0",
-    "remark": "^13.0.0",
-    "remark-html": "^13.0.1",
     "tailwindcss": "^1.9.6",
     "tailwindcss-dark-mode": "^1.1.7"
   }
