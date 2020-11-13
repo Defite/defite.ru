@@ -5,6 +5,8 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const markdownItAttrs = require("markdown-it-attrs");
+const markdownItBrakSpans = require("markdown-it-bracketed-spans");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -130,11 +132,15 @@ module.exports = function (eleventyConfig) {
     html: true,
     breaks: true,
     linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: false,
-    permalinkClass: "direct-link",
-    permalinkSymbol: "#",
-  });
+  })
+    .use(markdownItAnchor, {
+      permalink: false,
+      permalinkClass: "direct-link",
+      permalinkSymbol: "#",
+    })
+    .use(markdownItAttrs)
+    .use(markdownItBrakSpans);
+
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // Browsersync Overrides
