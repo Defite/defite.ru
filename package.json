@@ -29,6 +29,9 @@
     "@11ty/eleventy-plugin-rss": "^1.0.9",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
     "@tailwindcss/typography": "^0.2.0",
+    "crypto": "^1.0.1",
+    "deasync": "^0.1.21",
+    "jsonfile": "^6.1.0",
     "luxon": "^1.21.3",
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.2.5",
@@ -36,6 +39,7 @@
     "markdown-it-bracketed-spans": "^1.0.1",
     "plugin": "^0.3.3",
     "postcss-cli": "^8.2.0",
+    "sharp": "^0.26.2",
     "tailwindcss": "^1.9.6",
     "tailwindcss-dark-mode": "^1.1.7"
   }

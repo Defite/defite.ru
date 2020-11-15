@@ -7,6 +7,9 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItAttrs = require("markdown-it-attrs");
 const markdownItBrakSpans = require("markdown-it-bracketed-spans");
+const markdownPictureShortcode = require("./utils/shortcodes/picture");
+
+const shortcodeFaviconLinks = require("./utils/shortcodes/faviconLinks");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -51,81 +54,13 @@ module.exports = function (eleventyConfig) {
     return Math.min.apply(null, numbers);
   });
 
-  eleventyConfig.addCollection("tagList", function (collection) {
-    let tagSet = new Set();
-    collection.getAll().forEach(function (item) {
-      if ("tags" in item.data) {
-        let tags = item.data.tags;
-
-        tags = tags.filter(function (item) {
-          switch (item) {
-            // this list should match the `filter` list in tags.njk
-            case "all":
-            case "nav":
-            case "post":
-            case "posts":
-              return false;
-          }
-
-          return true;
-        });
-
-        for (const tag of tags) {
-          tagSet.add(tag);
-        }
-      }
-    });
-
-    // returning an array in addCollection works in Eleventy 0.5.3
-    return [...tagSet];
-  });
-
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("uploads");
   eleventyConfig.addPassthroughCopy("assets");
 
-  const assetsFaviconsPath = "/assets/favicons";
-  const favicons = [
-    {
-      rel: "icon",
-      name: "favicon-32x32.png",
-      sizes: "32x32",
-      id: "favicon",
-    },
-    {
-      rel: "apple-touch-icon",
-      name: "apple-touch-icon.png",
-      sizes: "180x180",
-      id: "apple-touch-icon",
-    },
-  ];
-
   // Create favicon links
-  eleventyConfig.addNunjucksShortcode("faviconLinks", function () {
-    return favicons
-      .map((favicon) => {
-        const type = favicon.type ? "type='" + favicon.type + "'" : "";
-        const sizes = favicon.sizes ? "sizes='" + favicon.sizes + "'" : "";
-        const id = favicon.id ? "id='" + favicon.id + "'" : "";
-
-        return (
-          "<link rel='" +
-          favicon.rel +
-          "' " +
-          id +
-          type +
-          sizes +
-          " href='" +
-          assetsFaviconsPath +
-          "/light/" +
-          favicon.name +
-          "'>"
-        );
-      })
-      .flat()
-      .join("");
-  });
+  eleventyConfig.addNunjucksShortcode("faviconLinks", shortcodeFaviconLinks);
 
   /* Markdown Overrides */
   let markdownLibrary = markdownIt({
@@ -139,7 +74,33 @@ module.exports = function (eleventyConfig) {
       permalinkSymbol: "#",
     })
     .use(markdownItAttrs)
-    .use(markdownItBrakSpans);
+    .use(markdownItBrakSpans)
+    .use(function (md) {
+      // Use picture shortcode for images in Markdown
+      md.renderer.rules.image = function (tokens, index) {
+        const token = tokens[index];
+
+        const className = token.attrGet("class");
+
+        const width = token.attrGet("width");
+        const height = token.attrGet("height");
+        const static = token.attrIndex("static") > -1;
+
+        const src = token.attrGet("src");
+        const alt = token.content;
+
+        const pictureOptions = {
+          src,
+          alt,
+          width: parseInt(width, 10),
+          height: parseInt(height, 10),
+          static,
+          className,
+        };
+
+        return markdownPictureShortcode(pictureOptions);
+      };
+    });
 
   eleventyConfig.setLibrary("md", markdownLibrary);
 

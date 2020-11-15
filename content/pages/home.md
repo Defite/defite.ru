@@ -8,7 +8,7 @@ eleventyNavigation:
   order: 1
 ---
 
-![Dude Lebowski](/uploads/big_lebowski_simpsons.jpg){width=200 height=200}
+![Dude Lebowski](/uploads/big_lebowski_simpsons.jpg){width=200 height=200 static .rounded-full}
 
 # Hello! I'm Nikita Makhov
 
