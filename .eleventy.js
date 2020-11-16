@@ -57,7 +57,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("uploads");
-  eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   // Create favicon links
   eleventyConfig.addNunjucksShortcode("faviconLinks", shortcodeFaviconLinks);

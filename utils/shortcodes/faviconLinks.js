@@ -1,4 +1,4 @@
-const assetsFaviconsPath = "/assets/favicons";
+const assetsFaviconsPath = "./src/assets/favicons";
 const favicons = [
   {
     rel: "icon",
