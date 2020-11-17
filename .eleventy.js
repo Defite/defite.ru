@@ -5,10 +5,13 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
-const eleventyRemark = require("@fec/eleventy-plugin-remark");
-const remarkImages = require("@fec/remark-images");
+const markdownItAttrs = require("markdown-it-attrs");
+const markdownItBrakSpans = require("markdown-it-bracketed-spans");
+const markdownPictureShortcode = require("./utils/shortcodes/picture");
 const excerpt = require("eleventy-plugin-excerpt");
 const embedYouTube = require("eleventy-plugin-youtube-embed");
+
+const shortcodeFaviconLinks = require("./utils/shortcodes/faviconLinks");
 
 module.exports = function (eleventyConfig) {
   // PostCSS & Tailwind
@@ -89,23 +92,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("uploads");
-  eleventyConfig.addPassthroughCopy("assets");
-
-  const assetsFaviconsPath = "/assets/favicons";
-  const favicons = [
-    {
-      rel: "icon",
-      name: "favicon-32x32.png",
-      sizes: "32x32",
-      id: "favicon",
-    },
-    {
-      rel: "apple-touch-icon",
-      name: "apple-touch-icon.png",
-      sizes: "180x180",
-      id: "apple-touch-icon",
-    },
-  ];
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   // Embed Youtube
   eleventyConfig.addPlugin(embedYouTube);
@@ -114,55 +101,49 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(excerpt);
 
   // Create favicon links
-  eleventyConfig.addNunjucksShortcode("faviconLinks", function () {
-    return favicons
-      .map((favicon) => {
-        const type = favicon.type ? "type='" + favicon.type + "'" : "";
-        const sizes = favicon.sizes ? "sizes='" + favicon.sizes + "'" : "";
-        const id = favicon.id ? "id='" + favicon.id + "'" : "";
-
-        return (
-          "<link rel='" +
-          favicon.rel +
-          "' " +
-          id +
-          type +
-          sizes +
-          " href='" +
-          assetsFaviconsPath +
-          "/light/" +
-          favicon.name +
-          "'>"
-        );
-      })
-      .flat()
-      .join("");
-  });
+  eleventyConfig.addNunjucksShortcode("faviconLinks", shortcodeFaviconLinks);
 
   /* Markdown Overrides */
   let markdownLibrary = markdownIt({
     html: true,
     breaks: true,
     linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: false,
-    permalinkClass: "direct-link",
-    permalinkSymbol: "#",
-  });
-  eleventyConfig.setLibrary("md", markdownLibrary);
+  })
+    .use(markdownItAnchor, {
+      permalink: false,
+      permalinkClass: "direct-link",
+      permalinkSymbol: "#",
+    })
+    .use(markdownItAttrs)
+    .use(markdownItBrakSpans)
+    .use(function (md) {
+      // Use picture shortcode for images in Markdown
+      md.renderer.rules.image = function (tokens, index) {
+        const token = tokens[index];
 
-  // Remark images
-  eleventyConfig.addPlugin(eleventyRemark, {
-    plugins: [
-      {
-        plugin: remarkImages,
-        options: {
-          srcDir: "./",
-          targetDir: "./_site",
-        },
-      },
-    ],
-  });
+        const className = token.attrGet("class");
+
+        const width = token.attrGet("width");
+        const height = token.attrGet("height");
+        const static = token.attrIndex("static") > -1;
+
+        const src = token.attrGet("src");
+        const alt = token.content;
+
+        const pictureOptions = {
+          src,
+          alt,
+          width: parseInt(width, 10),
+          height: parseInt(height, 10),
+          static,
+          className,
+        };
+
+        return markdownPictureShortcode(pictureOptions);
+      };
+    });
+
+  eleventyConfig.setLibrary("md", markdownLibrary);
 
   // Browsersync Overrides
   eleventyConfig.setBrowserSyncConfig({
@@ -201,8 +182,8 @@ module.exports = function (eleventyConfig) {
     // These are all optional, defaults are shown:
     dir: {
       input: ".",
-      includes: "_includes",
-      data: "_data",
+      includes: "src/_includes",
+      data: "src/_data",
       output: "_site",
     },
   };

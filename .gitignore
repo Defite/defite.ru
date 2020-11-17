@@ -1,4 +1,6 @@
 _site/
 _tmp/
+.images.cache
 node_modules/
 package-lock.json
+yarn.lock

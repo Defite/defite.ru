@@ -1,10 +1,8 @@
 // tailwind.config.js
 module.exports = {
   purge: {
-    content: ["_site/**/*.html"],
-    options: {
-      whitelist: [],
-    },
+    enabled: true,
+    content: ["./_site/**/*.html"],
   },
   theme: {
     extend: {
