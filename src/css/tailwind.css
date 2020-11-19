@@ -1,12 +1,3 @@
 @tailwind base;
-
-.tmpl-home .remarkri--figure {
-  max-width: 200px;
-}
-
-.tmpl-home .remarkri--figure > span {
-  border-radius: 50%;
-}
-
 @tailwind components;
 @tailwind utilities;
