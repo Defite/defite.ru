@@ -1,0 +1,252 @@
+---
+import FormattedDate from "./FormattedDate.astro";
+
+import getCategoryTheme from "../utils/getCategoryTheme";
+import { type CollectionEntry, render } from "astro:content";
+
+interface Props {
+    post: CollectionEntry<"blog">;
+    isPostPage?: boolean;
+}
+
+const { post, isPostPage } = Astro.props;
+const { title, pubDate, heroImage, excerpt, category } = post.data;
+
+const postUrl = `/blog/${post.id}`;
+
+const tagColor = getCategoryTheme(category);
+
+const { Content } = await render(post);
+---
+
+<article class:list={["post", "post-animation", { "post-full": isPostPage }]}>
+    <header>
+        {
+            (
+                <div class="post-meta mb-3">
+                    <a
+                        href="#"
+                        class={`post-category mr-3 md:mr-0 ${tagColor}`}
+                    >
+                        {category}
+                    </a>
+                    <span class="post-date">
+                        <FormattedDate date={pubDate} />
+                    </span>
+                </div>
+            )
+        }
+        <h2
+            class="text-2xl md:text-[32px] font-bold text-gray-900 dark:text-[#efefef] mb-8"
+        >
+            <a href={postUrl}>{title}</a>
+        </h2>
+    </header>
+
+    {
+        heroImage && (
+            <div class="hero-image">
+                <img class="rounded-md mb-4" src={heroImage} alt={heroImage} />
+            </div>
+        )
+    }
+
+    <div class="post-content text-base md:text-lg mb-4">
+        {isPostPage ? <Content /> : excerpt}
+    </div>
+
+    {
+        !isPostPage ? (
+            <footer class="text-base md:text-lg">
+                <a class="read-more" href={postUrl}>
+                    Read more
+                    <span class="hidden-arrow">&rarr;</span>
+                </a>
+            </footer>
+        ) : null
+    }
+</article>
+
+<style>
+    .post {
+        @apply mb-8;
+        @apply mt-16;
+        @apply relative;
+    }
+
+    .post-animation {
+        transition:
+            transform 0.5s ease-in-out,
+            opacity 0.5s ease-in-out;
+    }
+
+    :global(.loading) .post-animation {
+        transform: translateY(1rem);
+        opacity: 0;
+    }
+
+    .hero-image {
+        margin-bottom: 3em;
+    }
+
+    .post-date {
+        @apply text-stone-500;
+        @apply dark:text-stone-400;
+    }
+
+    .post-category {
+        @apply rounded-md;
+        @apply uppercase;
+        @apply text-white;
+        @apply dark:text-[#222222];
+        @apply inline-block;
+        @apply px-1;
+        @apply py-1;
+        @apply font-bold;
+        @apply text-sm;
+    }
+
+    .post-content {
+        @apply dark:text-neutral-300;
+    }
+
+    .post-content :global(p),
+    .post-content :global(figure) {
+        margin-top: 1em;
+    }
+
+    .post-content :global(a) {
+        @apply text-indigo-500;
+        @apply border-indigo-500/50;
+        @apply border-b-2;
+        @apply border-solid;
+    }
+
+    .post-content :global(a:hover) {
+        @apply border-indigo-500;
+    }
+
+    @media (min-width: 701px) {
+        .post {
+            position: relative;
+            padding-left: 180px;
+        }
+
+        .post-full {
+            padding-left: 0;
+        }
+
+        .post-date {
+            @apply absolute;
+            @apply top-0;
+            @apply left-0;
+        }
+
+        .post-full .post-date {
+            @apply relative;
+        }
+
+        .post-full .post-category {
+            @apply mr-3;
+        }
+    }
+
+    .post:first-child {
+        @apply mt-0;
+    }
+
+    .read-more {
+        @apply text-indigo-500;
+    }
+
+    .read-more .hidden-arrow {
+        @apply invisible;
+    }
+
+    .read-more:hover .hidden-arrow {
+        @apply visible;
+    }
+
+    /* Post elements styling */
+    .post :global(h2),
+    .post :global(h3),
+    .post :global(h4) {
+        @apply mt-10;
+        @apply mb-4;
+        @apply font-bold;
+    }
+
+    .post :global(h2) {
+        @apply text-[1.75rem];
+    }
+
+    .post :global(h3) {
+        @apply text-2xl;
+    }
+    .post :global(h4) {
+        @apply text-xl;
+    }
+
+    .post :global(blockquote) {
+        @apply my-12;
+        @apply text-xl;
+        border-left-width: 4px;
+        border-left-style: solid;
+        @apply border-l-indigo-600;
+        @apply px-6;
+        @apply py-1;
+    }
+
+    .post :global(blockquote p) {
+        margin-top: 0;
+    }
+
+    .post :global(ul),
+    .post :global(ol) {
+        @apply m-6;
+    }
+
+    .post :global(ol) {
+        list-style: revert;
+    }
+
+    .post :global(ul li),
+    .post :global(ol li) {
+        @apply mb-2;
+    }
+
+    .post :global(ul li::before) {
+        @apply text-indigo-600;
+        content: "–";
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+
+    .post :global(ol li::marker) {
+        @apply text-indigo-600;
+    }
+
+    /* Specific image styles, that can be set in markdown */
+    .post :global(.kg-width-wide),
+    .post :global(.kg-width-full) {
+        position: relative;
+        width: 60vw;
+        min-width: 100%;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        transform: translateX(calc(50vw - 50%));
+    }
+
+    .post :global(.kg-width-full) {
+        width: 100vw;
+    }
+
+    .post :global(.kg-card figcaption) {
+        @apply mt-4;
+        @apply mb-6;
+        @apply text-sm;
+        @apply text-[#757575];
+        text-align: center;
+    }
+</style>

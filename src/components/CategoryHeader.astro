@@ -1,0 +1,44 @@
+---
+import getCategoryTheme from "../utils/getCategoryTheme";
+import {Tag} from "@tryghost/content-api";
+export interface Props {
+    tag: Tag;
+}
+
+const { tag } = Astro.props;
+const categoryColor = getCategoryTheme(tag.slug);
+---
+
+<div class="category-header">
+    <div class=`dot ${categoryColor}`></div>
+    <h1 class="title">{tag.name}</h1>
+</div>
+
+<style>
+    .category-header {
+        @apply pb-14;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        border-bottom: 1px solid #dfdfdf;
+        @apply dark:border-[#4e4e4e];
+    }
+
+    .category-header > *:not(:last-child) {
+        @apply mr-3;
+    }
+
+    .dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+    }
+
+    .title {
+        @apply text-xl;
+        @apply sm:text-2xl;
+        @apply font-bold;
+        @apply dark:text-[#efefef];
+        text-transform: capitalize;
+    }
+</style>
