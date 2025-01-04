@@ -1,0 +1,47 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+
+import PageLayout from "../../layouts/MainLayout.astro";
+import PostsList from "../../components/PostsList.astro";
+import CategoryHeader from "../../components/CategoryHeader.astro";
+import getCapitalizedWord from "../../utils/getCapitalizedWord";
+
+type Category = CollectionEntry<"blog">["data"]["category"];
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+
+    const uniqueCategories = [
+        ...new Set(posts.map((post) => post.data.category).flat()),
+    ];
+
+    return uniqueCategories.map((category) => {
+        const filteredPosts = posts.filter((post) =>
+            post.data.category.includes(category),
+        );
+
+        return {
+            params: {
+                category: category.toLowerCase() as Category,
+            },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+const { category } = Astro.params;
+const { posts } = Astro.props;
+
+const categoryTitle = getCapitalizedWord(category);
+
+const filteredPosts = posts
+    .filter((post: CollectionEntry<"blog">) =>
+        post.data.category.includes(categoryTitle),
+    )
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout title={categoryTitle}>
+    <CategoryHeader category={categoryTitle} />
+    <PostsList posts={filteredPosts} />
+</PageLayout>

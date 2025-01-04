@@ -1,0 +1,31 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+
+const pages = await getCollection("pages");
+const blogPosts = await getCollection("blog");
+
+const blogCategories = blogPosts.map((item) => item.data.category);
+const menuCategories = [...new Set(blogCategories)].map((item) => ({
+    path: `/${item.toLowerCase()}`,
+    name: item,
+}));
+---
+
+<nav>
+    <ul class:list={["flex", "my-6", "gap-6", "font-medium"]}>
+        {
+            menuCategories.map((category) => (
+                <li>
+                    <a href={category.path}>{category.name}</a>
+                </li>
+            ))
+        }
+        {
+            pages.map((page) => (
+                <li>
+                    <a href={page.id}>{page.data.title}</a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>

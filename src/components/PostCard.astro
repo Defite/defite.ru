@@ -1,8 +1,10 @@
 ---
+import { Image } from "astro:assets";
+import { type CollectionEntry, render } from "astro:content";
+
 import FormattedDate from "./FormattedDate.astro";
 
 import getCategoryTheme from "../utils/getCategoryTheme";
-import { type CollectionEntry, render } from "astro:content";
 
 interface Props {
     post: CollectionEntry<"blog">;
@@ -17,6 +19,13 @@ const postUrl = `/blog/${post.id}`;
 const tagColor = getCategoryTheme(category);
 
 const { Content } = await render(post);
+
+const lookupPath = "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}";
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}",
+);
+if (heroImage && !images[heroImage])
+    throw new Error(`"${heroImage}" does not exist in glob: ${lookupPath}`);
 ---
 
 <article class:list={["post", "post-animation", { "post-full": isPostPage }]}>
@@ -46,7 +55,11 @@ const { Content } = await render(post);
     {
         heroImage && (
             <div class="hero-image">
-                <img class="rounded-md mb-4" src={heroImage} alt={heroImage} />
+                <Image
+                    class="rounded-md mb-4"
+                    src={images[heroImage]()}
+                    alt={heroImage}
+                />
             </div>
         )
     }

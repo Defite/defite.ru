@@ -1,16 +1,22 @@
 ---
 import "@fontsource/ibm-plex-sans/700-italic.css";
+
 import Logo from "./Logo.astro";
+import CategoryDrowdown from "./CategoryDropdown.astro";
+
 import { SITE_DESCRIPTION } from "../consts";
 ---
 
-<header class="mb-11 md:mb-20 pt-8 px-4 container max-w-[780px] mx-auto">
+<header class="mb-11 md:mb-12 pt-8 px-4 container max-w-[780px] mx-auto">
     <div class="text-center md:text-left">
         <Logo type="header" />
-        <div class="mt-4">
+        <div
+            class="flex justify-between items-center mt-4 flex-col md:flex-row gap-8"
+        >
             <div class="text-[#757575] dark:text-stone-400">
                 {SITE_DESCRIPTION}
             </div>
+            <CategoryDrowdown />
         </div>
     </div>
 </header>

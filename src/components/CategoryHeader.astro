@@ -1,17 +1,20 @@
 ---
+import type { CollectionEntry } from "astro:content";
+
 import getCategoryTheme from "../utils/getCategoryTheme";
-import {Tag} from "@tryghost/content-api";
+
 export interface Props {
-    tag: Tag;
+    category: CollectionEntry<"blog">["data"]["category"];
 }
 
-const { tag } = Astro.props;
-const categoryColor = getCategoryTheme(tag.slug);
+const { category } = Astro.props;
+
+const categoryColor = getCategoryTheme(category);
 ---
 
 <div class="category-header">
     <div class=`dot ${categoryColor}`></div>
-    <h1 class="title">{tag.name}</h1>
+    <h1 class="title">{category}</h1>
 </div>
 
 <style>
