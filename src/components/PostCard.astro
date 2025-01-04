@@ -34,7 +34,7 @@ if (heroImage && !images[heroImage])
             (
                 <div class="post-meta mb-3">
                     <a
-                        href="#"
+                        href={`/categories/${category.toLowerCase()}`}
                         class={`post-category mr-3 md:mr-0 ${tagColor}`}
                     >
                         {category}
