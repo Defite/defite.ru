@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import Title from "./Title.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, heroImage, excerpt } = post.data;
+
+const postUrl = `/blog/${post.id}`;
+
+const lookupPath = "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}";
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}"
+);
+if (heroImage && !images[heroImage])
+  throw new Error(`"${heroImage}" does not exist in glob: ${lookupPath}`);
+---
+
+<article class="post">
+  <header>
+    <Title title={title} href={postUrl} />
+  </header>
+
+  {
+    heroImage && (
+      <div class="hero-image">
+        <Image
+          class="rounded-md mb-4"
+          src={images[heroImage]()}
+          alt={heroImage}
+        />
+      </div>
+    )
+  }
+
+  <div class="post-content text-base md:text-lg mb-4">
+    {excerpt}
+  </div>
+
+  <footer class="text-base md:text-lg">
+    <a class="read-more" href={postUrl}>
+      Read more
+      <span class="hidden-arrow">&rarr;</span>
+    </a>
+  </footer>
+</article>
+
+<style>
+  .post {
+    @apply mb-8;
+    @apply mt-16;
+    @apply relative;
+  }
+
+  .hero-image {
+    margin-bottom: 3em;
+  }
+
+  .post-content {
+    @apply font-body;
+  }
+
+  .post:first-child {
+    @apply mt-0;
+  }
+
+  .read-more {
+    @apply text-accent;
+  }
+
+  .read-more .hidden-arrow {
+    @apply invisible;
+  }
+
+  .read-more:hover .hidden-arrow {
+    @apply visible;
+  }
+</style>

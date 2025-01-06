@@ -5,11 +5,11 @@ import PageLayout from "../layouts/MainLayout.astro";
 import PageContent from "../components/PageContent.astro";
 
 export async function getStaticPaths() {
-    const posts = await getCollection("pages");
-    return posts.map((post) => ({
-        params: { slug: post.id },
-        props: post,
-    }));
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: page,
+  }));
 }
 type Props = CollectionEntry<"pages">;
 

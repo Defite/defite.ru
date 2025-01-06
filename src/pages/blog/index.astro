@@ -1,18 +1,26 @@
 ---
 import PageLayout from "../../layouts/MainLayout.astro";
-import PostsList from "../../components/PostsList.astro";
 
 import { getCollection } from "astro:content";
 
 import { SITE_TITLE } from "../../consts";
+import PostsList from "../../components/PostsList.astro";
 
-const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const collection = await getCollection("blog");
+
+const posts = collection.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
 <PageLayout title={SITE_TITLE}>
-    <main>
-        <PostsList posts={posts} />
-    </main>
+  <main class="wrapper">
+    <PostsList posts={posts} />
+  </main>
 </PageLayout>
+
+<style>
+  .wrapper {
+    max-width: 640px;
+  }
+</style>

@@ -9,7 +9,6 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
-    category: z.enum(["JS", "Blog"]),
     excerpt: z.string(),
     // Transform string to Date object
     pubDate: z.coerce.date(),

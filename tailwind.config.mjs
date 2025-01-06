@@ -3,16 +3,21 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["Inter", "Helvetica", "sans-serif"],
-      },
-      screens: {
-        md: "701px",
-      },
       colors: {
-        "tag-blog": "#4ad440",
-        "tag-js": "#f7df1e",
-        "light-aaa": "#aaaaaa",
+        accent: "#FF4C60",
+      },
+      fontFamily: {
+        heading: ["Source Sans Pro", "sans-serif"],
+        body: [
+          "Open Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
       },
     },
   },

@@ -1,22 +1,119 @@
 ---
-import "@fontsource/ibm-plex-sans/700-italic.css";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
-import Logo from "./Logo.astro";
-import CategoryDrowdown from "./CategoryDropdown.astro";
+type Props = {
+  isCentered?: boolean;
+};
 
-import { SITE_DESCRIPTION } from "../consts";
+const menuRoutes = [
+  {
+    path: "/blog",
+    name: "Blog",
+  },
+  {
+    path: "#",
+    name: "Projects",
+  },
+  {
+    path: "/about-me",
+    name: "About me",
+  },
+];
+
+const { isCentered } = Astro.props;
+const { pathname } = Astro.url;
 ---
 
-<header class="mb-11 md:mb-12 pt-8 px-4 container max-w-[780px] mx-auto">
-    <div class="text-center md:text-left">
-        <Logo type="header" />
-        <div
-            class="flex justify-between items-center mt-4 flex-col md:flex-row gap-8"
-        >
-            <div class="text-[#757575] dark:text-stone-400">
-                {SITE_DESCRIPTION}
-            </div>
-            <CategoryDrowdown />
-        </div>
-    </div>
+<header class:list={["header", { "header-wrapper": isCentered }]}>
+  <h1 class="heading">
+    <a href="/">{SITE_TITLE}<span class="pink-dot">.</span></a>
+  </h1>
+  <p class="subline">
+    {SITE_DESCRIPTION}
+  </p>
+
+  <nav class="nav">
+    <ul
+      class:list={[
+        "nav-list",
+        {
+          "justify-center sm:justify-start": isCentered,
+          "sm:justify-start": !isCentered,
+        },
+      ]}
+    >
+      {
+        menuRoutes.map((route) => (
+          <li>
+            <a
+              class:list={[
+                "link",
+                {
+                  "active-link":
+                    pathname === route.path || pathname.includes(route.path),
+                },
+              ]}
+              href={route.path}
+            >
+              {route.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </header>
+
+<style>
+  .header-wrapper {
+    @apply flex sm:block flex-col justify-center items-center h-full text-center;
+  }
+
+  .header {
+    @apply p-5 sm:p-9;
+  }
+
+  .heading {
+    @apply font-heading font-bold text-5xl sm:text-6xl sm:text-left;
+  }
+
+  .pink-dot {
+    @apply text-accent;
+  }
+
+  .subline {
+    @apply font-body text-gray-500 mt-2 text-base sm:text-xl sm:text-left;
+  }
+
+  .nav {
+    @apply font-body text-gray-500 mt-2 text-base sm:text-lg sm:text-left;
+  }
+
+  .nav-list {
+    @apply flex gap-6 items-center mt-4;
+  }
+
+  .nav-list li {
+    position: relative;
+  }
+
+  .nav-list li::after {
+    content: "•";
+    position: absolute;
+    right: -16px;
+    top: 0;
+  }
+
+  .nav-list li:last-child::after {
+    content: "";
+  }
+
+  .link {
+    @apply border-b-2 border-solid;
+  }
+
+  .link:hover,
+  .active-link {
+    @apply text-accent border-accent;
+  }
+</style>

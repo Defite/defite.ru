@@ -1,0 +1,26 @@
+---
+type Props = {
+  title: string;
+  href?: string;
+};
+
+const { href, title } = Astro.props;
+---
+
+<h2 class="title">
+  {href ? <a href={href}>{title}</a> : title}
+</h2>
+
+<style>
+  .title {
+    @apply text-2xl md:text-[32px] font-bold mb-8 mt-0 font-heading;
+  }
+
+  .title a {
+    @apply border-b-2 border-solid;
+  }
+
+  .title a:hover {
+    @apply border-black;
+  }
+</style>
