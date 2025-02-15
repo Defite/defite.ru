@@ -1,0 +1,33 @@
+---
+import MdxImage from "./MdxImage.astro";
+
+export interface Props {
+  items: string[];
+  width: number;
+  withUrl?: boolean;
+}
+
+const { items, width, withUrl } = Astro.props;
+---
+
+<div class="mdx-gallery">
+  {
+    items.map((item) => (
+      <MdxImage
+        src={`/src/assets/${item}`}
+        width={width}
+        alt={`${item}`}
+        withUrl={withUrl}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .mdx-gallery {
+    display: flex;
+    gap: 20px;
+    flex-flow: row wrap;
+    width: 100vw;
+  }
+</style>
