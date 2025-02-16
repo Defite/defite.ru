@@ -10,7 +10,7 @@ export interface Props {
 const { items, width, withUrl } = Astro.props;
 ---
 
-<div class="mdx-gallery">
+<div class="mdx-gallery-grid">
   {
     items.map((item) => (
       <MdxImage
@@ -24,10 +24,15 @@ const { items, width, withUrl } = Astro.props;
 </div>
 
 <style>
-  .mdx-gallery {
-    display: flex;
+  .mdx-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 697px));
     gap: 20px;
-    flex-flow: row wrap;
-    width: 100vw;
+    margin-top: 1em;
+    width: calc(100vw - 89px);
+  }
+
+  .mdx-gallery-grid > :global(.figure) {
+    margin-top: 0;
   }
 </style>
