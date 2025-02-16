@@ -35,4 +35,10 @@ const { items, width, withUrl } = Astro.props;
   .mdx-gallery-grid > :global(.figure) {
     margin-top: 0;
   }
+
+  @screen sm {
+    .mdx-gallery-grid {
+      width: calc(100vw - 80px);
+    }
+  }
 </style>
