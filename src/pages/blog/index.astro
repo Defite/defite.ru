@@ -3,7 +3,7 @@ import PageLayout from "../../layouts/MainLayout.astro";
 
 import { getCollection } from "astro:content";
 
-import { SITE_TITLE } from "../../consts";
+import { SITE_BLOG_DESCRIPTION, SITE_TITLE } from "../../consts";
 import PostsList from "../../components/PostsList.astro";
 
 const collection = await getCollection("blog");
@@ -13,7 +13,7 @@ const posts = collection.sort(
 );
 ---
 
-<PageLayout title={SITE_TITLE}>
+<PageLayout title={SITE_TITLE} description={SITE_BLOG_DESCRIPTION}>
   <main class="wrapper">
     <PostsList posts={posts} />
   </main>

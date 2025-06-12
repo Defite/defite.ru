@@ -14,9 +14,9 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { title } = post.data;
+const { title, description } = post.data;
 ---
 
-<PageLayout title={title}>
+<PageLayout title={title} description={description}>
   <PostCard post={post} />
 </PageLayout>

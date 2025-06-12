@@ -1,13 +1,9 @@
-import type { CollectionEntry } from "astro:content";
-
 /**
  * Gets tailwind class depending on tag
  * @returns string
  * @param tag
  */
-const getCategoryTheme = (
-  category: CollectionEntry<"blog">["data"]["category"],
-) => {
+const getCategoryTheme = (category: string) => {
   switch (category) {
     case "Blog":
       return "bg-lime-500";
