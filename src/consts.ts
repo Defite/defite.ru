@@ -3,5 +3,5 @@
 
 export const SITE_TITLE = "Nikita Makhov";
 export const SITE_DESCRIPTION =
-  "I make web sites and interfaces, run, bike and play videogames";
+  "I make web sites and interfaces, run and play videogames";
 export const SITE_BLOG_DESCRIPTION = "Thoughts on web development, design, and life in general";
