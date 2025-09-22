@@ -79,8 +79,13 @@ const { pathname } = Astro.url;
     @apply font-heading font-bold text-5xl sm:text-6xl sm:text-left;
   }
 
+  .heading:hover .pink-dot {
+    @apply animate-bounce;
+  }
+
   .pink-dot {
     @apply text-accent;
+    @apply inline-block;
   }
 
   .subline {
