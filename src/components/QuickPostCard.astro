@@ -1,0 +1,49 @@
+---
+import { type CollectionEntry, render } from "astro:content";
+import Title from "./Title.astro";
+import QuickBadge from "./QuickBadge.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+
+const { Content } = await render(post);
+---
+
+<article class="post">
+  <header class="header">
+    <QuickBadge />
+  </header>
+
+  <div class="post-content text-base md:text-lg mb-4">
+    <Content />
+  </div>
+</article>
+
+<style>
+  @reference "../styles/global.css";
+
+  .header {
+    @apply mb-4;
+  }
+
+  .post {
+    @apply mb-8;
+    @apply mt-16;
+    @apply relative;
+  }
+
+  .hero-image {
+    margin-bottom: 1em;
+  }
+
+  .post-content {
+    @apply font-body;
+  }
+
+  .post:first-child {
+    @apply mt-0;
+  }
+</style>

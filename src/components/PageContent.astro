@@ -30,12 +30,14 @@ const { Content } = await render(page);
   </header>
 
   <style>
+    @reference "../styles/global.css";
+
     .page {
       @apply py-5 px-5 sm:px-9 sm:py-9;
     }
 
     .hero-image {
-      margin-bottom: 3em;
+      margin-bottom: 1em;
     }
 
     .page-content {

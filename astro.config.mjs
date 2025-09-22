@@ -2,10 +2,9 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-
-import tailwind from "@astrojs/tailwind";
-
 import expressiveCode from "astro-expressive-code";
+import tailwindcss from "@tailwindcss/vite";
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +15,8 @@ export default defineConfig({
     }),
     mdx(),
     sitemap(),
-    tailwind(),
   ],
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });

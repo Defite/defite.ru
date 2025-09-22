@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { type CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 import Title from "./Title.astro";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, heroImage, excerpt } = post.data;
+const { title, heroImage, excerpt} = post.data;
 
 const postUrl = `/blog/${post.id}`;
 
@@ -16,6 +16,7 @@ const lookupPath = "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}";
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/*.{jpeg,jpg,png,gif,avif,webp}"
 );
+
 if (heroImage && !images[heroImage])
   throw new Error(`"${heroImage}" does not exist in glob: ${lookupPath}`);
 ---
@@ -50,6 +51,8 @@ if (heroImage && !images[heroImage])
 </article>
 
 <style>
+  @reference "../styles/global.css";
+
   .post {
     @apply mb-8;
     @apply mt-16;
@@ -57,7 +60,7 @@ if (heroImage && !images[heroImage])
   }
 
   .hero-image {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
   }
 
   .post-content {

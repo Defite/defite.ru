@@ -65,6 +65,8 @@ const { pathname } = Astro.url;
 </header>
 
 <style>
+  @reference "../styles/global.css";
+
   .header-wrapper {
     @apply flex sm:block flex-col justify-center items-center h-full text-center;
   }
@@ -109,7 +111,7 @@ const { pathname } = Astro.url;
   }
 
   .link {
-    @apply border-b-2 border-solid;
+    @apply border-b-2 border-solid border-light_grey;
   }
 
   .link:hover,

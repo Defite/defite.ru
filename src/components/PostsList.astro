@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostCardWide from "./PostCardWide.astro";
+import QuickPostCard from "./QuickPostCard.astro";
 
 export interface Props {
   posts: CollectionEntry<"blog">[];
@@ -10,10 +11,12 @@ const { posts } = Astro.props;
 ---
 
 <section class="posts-list">
-  {posts.map((post) => <PostCardWide post={post} />)}
+  {posts.map((post) => post.data.quick ? <QuickPostCard post={post} /> : <PostCardWide post={post} />)}
 </section>
 
 <style>
+  @reference "../styles/global.css";
+
   .posts-list {
     @apply py-5 px-5 sm:px-9 sm:py-9;
   }
