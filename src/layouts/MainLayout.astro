@@ -29,8 +29,8 @@ const isMainPage = pathname === "/";
     <meta name="generator" content={Astro.generator} />
     <SeoMeta title={title} description={description} />
   </head>
-  <body class="h-full">
-    <Header isCentered={isMainPage} />
+  <body class="h-full flex items-center flex-col">
+    <Header isIntro={isMainPage} />
     <section>
       <slot />
     </section>

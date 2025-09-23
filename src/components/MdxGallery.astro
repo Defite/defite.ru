@@ -27,11 +27,16 @@ const { items, width, withUrl } = Astro.props;
   @reference "../styles/global.css";
   
   .mdx-gallery-grid {
+    @apply rounded-md;
+
+    overflow: hidden;
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(auto, 697px));
+    grid-template-columns: repeat(auto-fill, minmax(auto, 358px));
     gap: 20px;
     margin-top: 1em;
-    width: calc(100vw - 60px);
+    margin-left: -20px;
+    width: calc(100% + 40px);
   }
 
   .mdx-gallery-grid > :global(.figure) {
@@ -40,7 +45,7 @@ const { items, width, withUrl } = Astro.props;
 
   @screen sm {
     .mdx-gallery-grid {
-      width: calc(100vw - 80px);
+      width: 100%;
     }
   }
 </style>

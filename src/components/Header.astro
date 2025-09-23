@@ -2,7 +2,7 @@
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
 type Props = {
-  isCentered?: boolean;
+  isIntro?: boolean;
 };
 
 const menuRoutes = [
@@ -20,11 +20,11 @@ const menuRoutes = [
   },
 ];
 
-const { isCentered } = Astro.props;
+const { isIntro } = Astro.props;
 const { pathname } = Astro.url;
 ---
 
-<header class:list={["header", { "header-wrapper": isCentered }]}>
+<header class:list={["header", { "header-intro": isIntro }]}>
   <h1 class="heading">
     <a href="/">{SITE_TITLE}<span class="pink-dot">.</span></a>
   </h1>
@@ -37,8 +37,8 @@ const { pathname } = Astro.url;
       class:list={[
         "nav-list",
         {
-          "justify-center sm:justify-start": isCentered,
-          "sm:justify-start": !isCentered,
+          "justify-center sm:justify-start": isIntro,
+          "sm:justify-start": !isIntro,
         },
       ]}
     >
@@ -67,12 +67,12 @@ const { pathname } = Astro.url;
 <style>
   @reference "../styles/global.css";
 
-  .header-wrapper {
-    @apply flex sm:block flex-col justify-center items-center h-full text-center;
+  .header-intro {
+    @apply flex flex-col justify-center items-center h-full text-center w-full;
   }
 
   .header {
-    @apply p-5 sm:p-9;
+    @apply p-5 sm:p-9 flex flex-col items-center;
   }
 
   .heading {
