@@ -8,6 +8,7 @@ The design is minimalistic and was made of parts I used on my old next.js landin
 
 ## Project structure
 
+```bash
 ├── public/
 ├── README.md
 ├── src
@@ -33,6 +34,7 @@ The design is minimalistic and was made of parts I used on my old next.js landin
 │   ├── styles/
 │   └── types.ts
 └── tsconfig.json
+```
 
 `/src/content/blog` folder contain all published posts, `/src/content/drafts` folder contains all unpublished posts, `/src/content/pages` folder is responsible for the contents of pages like "About me".
 
